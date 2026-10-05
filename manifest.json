@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Clipboarder",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "Collect multiple text selections into a list and paste them back one at a time, using two hotkeys you choose. Runs 100% locally.",
-  "permissions": ["storage"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage", "activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
   },
@@ -24,14 +23,6 @@
       "128": "icons/icon128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
-    }
-  ],
   "commands": {
     "toggle-copy-mode": {
       "suggested_key": {

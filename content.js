@@ -8,12 +8,17 @@
     applyCopyMode(!!res.copyModeEnabled);
   });
 
-  chrome.runtime.onMessage.addListener((message) => {
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'PING') {
+      sendResponse({ ok: true }); // lets background.js know content.js is already here
+      return false;
+    }
     if (message.type === 'COPY_MODE_CHANGED') {
       applyCopyMode(message.enabled);
     } else if (message.type === 'PASTE_TEXT') {
       insertItemAtCursor(normalizeItem(message.item));
     }
+    return false;
   });
 
   function normalizeItem(it) {

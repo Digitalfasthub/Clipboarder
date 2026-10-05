@@ -71,22 +71,25 @@ two keyboard shortcuts the user configures themselves.
 PERMISSION JUSTIFICATIONS (Privacy practices tab)
 -----------------------------------------------------------
 
-Host permission (<all_urls>) / content script on all pages:
+"activeTab" permission:
   Clipboarder needs to read the user's text selection and insert text at
   the cursor on whichever page the user is currently using, since the
-  copy/paste shortcuts can be used on any website. It only reads a page's
-  selected text when the user has explicitly turned on copy mode via their
-  own keyboard shortcut, and only writes text back when the user triggers
-  a paste. It never reads page content otherwise, and never transmits any
-  page data anywhere.
+  copy/paste shortcuts can be used on any website. activeTab grants only
+  temporary, per-invocation access to the single tab the user is on at the
+  moment they press one of the extension's keyboard shortcuts or interact
+  with its popup - there is no standing access to any page at any other
+  time, and no page data is ever transmitted anywhere.
+
+"scripting" permission:
+  Used together with activeTab to inject the extension's small content
+  script into the current tab only at the moment it's needed (when a
+  shortcut is pressed or a popup action is taken), instead of loading it
+  into every page up front.
 
 "storage" permission:
   Used only to store the user's collected clipboard items and settings
   locally in the browser (chrome.storage.local). No data is synced to any
   external server or account.
-
-"scripting" permission (if used by current manifest):
-  Not currently used - omit if manifest does not declare it.
 
 
 DATA USAGE DISCLOSURE (for the "Data collected" declaration)

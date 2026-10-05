@@ -47,11 +47,14 @@ local extension storage and never leaves your machine.
 - **Clean, minimal popup** - the item list is front and center. An ⓘ icon
   opens a short "how to use" popover; a ⚙ icon opens a separate Settings
   screen for everything else, so the main view never gets cluttered.
+- **Minimal permissions** - uses Chrome's `activeTab` permission rather
+  than standing access to every website. The extension only touches the
+  page you're on at the exact moment you press one of its hotkeys or click
+  something in its popup - see "Permissions" below.
 
-## Installation (unpacked, for local/personal use)
+## Installation
 
-This extension isn't published on the Chrome Web Store - it's loaded
-locally as an "unpacked" extension.
+**Unpacked (for local development):**
 
 1. Open `chrome://extensions` in Chrome.
 2. Turn on **Developer mode** (toggle, top-right).
@@ -102,6 +105,26 @@ Opened via the ⚙ icon in the popup.
 The whole list is also hard-capped at 300,000 total characters regardless
 of the settings above - see "Built-in memory guardrails" below.
 
+## Permissions
+
+Clipboarder uses `activeTab` + `scripting` instead of requesting access to
+every website up front. In practice that means:
+
+- The extension has **no access to any page** until you do one of three
+  things: press the copy hotkey, press the paste hotkey, or open the popup
+  and click something in it. Each of those counts as "invoking the
+  extension," which is exactly when Chrome grants temporary access to
+  whichever tab is currently active.
+- That temporary access is scoped to that one tab and is used immediately
+  to inject the small script that reads your selection / inserts text -
+  it isn't retained afterwards.
+- **One trade-off**: if you turn copy mode on and then navigate to a new
+  page in the same tab (e.g. click a link), the on-page "copy mode"
+  indicator won't carry over to the new page automatically, since that's a
+  fresh page load with no standing access. Just press the copy hotkey
+  again on the new page to re-enable it there. The paste hotkey is
+  unaffected by this, since every press is its own fresh invocation.
+
 ## Known limitations
 
 - **Google Docs, Sheets and Slides**: these render the document on canvas
@@ -111,8 +134,7 @@ of the settings above - see "Built-in memory guardrails" below.
   - *Copying from them* is not reliable, since there's no normal text
     selection for the extension to read. This is a limitation of how those
     apps are built, not a bug in the extension.
-- Only tested on Chrome (Manifest V3). Not published to the Chrome Web
-  Store; must be loaded as "unpacked" per the instructions above.
+- Only tested on Chrome (Manifest V3).
 
 ## Project structure
 
@@ -120,7 +142,7 @@ of the settings above - see "Built-in memory guardrails" below.
 clipboard-list-extension/
 ├── manifest.json          Extension manifest (Manifest V3)
 ├── background.js          Service worker: storage, hotkey handling, limits
-├── content.js              Runs on every page: selection capture, paste/insert, clipboard fallback
+├── content.js              Injected on demand into the active tab: selection capture, paste/insert, clipboard fallback
 ├── content.css             Styling for the on-page copy-mode badge and toast
 ├── popup.html / popup.js   The toolbar popup UI (list + settings)
 ├── icons/                  Toolbar icon PNGs (16/32/48/128px)

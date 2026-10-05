@@ -67,6 +67,31 @@ chrome.commands.onCommand.addListener(async (command) => {
   }
 });
 
+// The extension no longer holds standing access to every page. Instead it
+// relies on the "activeTab" permission, which grants temporary access to
+// whichever tab is active at the moment the user presses one of our
+// keyboard shortcuts or interacts with the popup - that's exactly when
+// these functions are called, so the grant is always valid right here.
+// content.js is injected on demand into that tab (if it isn't already
+// there) rather than being auto-loaded into every page up front.
+async function ensureContentScriptInjected(tabId) {
+  try {
+    await chrome.tabs.sendMessage(tabId, { type: 'PING' });
+    return true; // already injected on this page
+  } catch (e) {
+    // not injected yet - fall through and inject now
+  }
+  try {
+    await chrome.scripting.insertCSS({ target: { tabId }, files: ['content.css'] });
+    await chrome.scripting.executeScript({ target: { tabId }, files: ['content.js'] });
+    return true;
+  } catch (e) {
+    // e.g. chrome:// pages, the Chrome Web Store, or other pages the
+    // extension simply isn't allowed to touch - nothing we can do there.
+    return false;
+  }
+}
+
 // Hotkey paste: always pastes the currently SELECTED item (pasteIndex).
 // It never advances on its own - pressing the hotkey repeatedly keeps
 // pasting the same item until you click a different one in the popup.
@@ -83,14 +108,14 @@ async function pasteNextInRotation() {
   notifyActiveTab({ type: 'PASTE_TEXT', item });
 }
 
-function notifyActiveTab(message) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const tabId = tabs[0] && tabs[0].id;
-    if (!tabId) return;
-    chrome.tabs.sendMessage(tabId, message, () => {
-      // Swallow "no receiving end" errors (e.g. chrome:// pages, PDF viewer).
-      void chrome.runtime.lastError;
-    });
+async function notifyActiveTab(message) {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  const tabId = tabs[0] && tabs[0].id;
+  if (!tabId) return;
+  const ready = await ensureContentScriptInjected(tabId);
+  if (!ready) return;
+  chrome.tabs.sendMessage(tabId, message, () => {
+    void chrome.runtime.lastError;
   });
 }
 

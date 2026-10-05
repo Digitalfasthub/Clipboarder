@@ -88,14 +88,15 @@
   stored.
 </p>
 
-<h2>Why the extension requests broad page access</h2>
+<h2>Why the extension requests page access, and how little it gets</h2>
 <p>
-  Clipboarder requests access to all websites (<code>&lt;all_urls&gt;</code>)
-  solely because its copy/paste shortcuts need to work on whichever page
-  you're currently using - there's no way to predict in advance which site
-  that will be. The extension only acts on a page's content when you
-  explicitly trigger it via your configured shortcuts or by clicking an
-  item in its popup.
+  Clipboarder does not have standing access to any website. It uses
+  Chrome's <code>activeTab</code> permission, which only grants temporary
+  access to the single tab you're currently on, and only at the exact
+  moment you press one of its keyboard shortcuts or click something in its
+  popup. That access is used immediately to read your selection or insert
+  text, and isn't retained afterward. The extension has no way to read or
+  modify any page outside of that brief, user-initiated window.
 </p>
 
 <h2>Third parties</h2>
