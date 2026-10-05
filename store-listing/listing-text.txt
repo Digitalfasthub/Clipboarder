@@ -1,0 +1,111 @@
+===========================================================
+CHROME WEB STORE LISTING - COPY/PASTE REFERENCE
+===========================================================
+
+ITEM NAME
+-----------------------------------------------------------
+Clipboarder
+
+
+SHORT DESCRIPTION (max 132 characters - used in search cards)
+-----------------------------------------------------------
+Collect multiple text selections into a list and paste them back one at a time, with two shortcuts you choose.
+
+(131 characters)
+
+
+DETAILED DESCRIPTION (Store listing page, plain text - no HTML)
+-----------------------------------------------------------
+Clipboarder turns your clipboard into a real list instead of a single slot.
+
+Press a keyboard shortcut to turn on "copy mode," then just select text
+normally on any page - each selection is added to a list instead of
+overwriting your last copy. When you're ready, press a second shortcut (or
+click an item in the popup) to paste any of them back, in any order, as
+many times as you like.
+
+KEY FEATURES
+
+- Two keyboard shortcuts, fully chosen by you - one toggles copy mode,
+  the other pastes the currently selected item.
+- A real list, not a single slot - items stay available after pasting, so
+  you can reuse any of them later.
+- Click any item to select and paste it; delete single items with one
+  click, or clear the whole list at once.
+- Independent controls for whether clicking an item pastes it immediately,
+  whether the paste shortcut works, or both.
+- Optional rich-text capture - keep formatting (bold, colors, fonts) and
+  choose separately whether hyperlinks are kept or stripped out.
+- Built-in memory limits - a configurable max item count and max
+  characters per item, plus a hard total budget across the whole list, so
+  it can never quietly use excessive memory.
+- Clean, minimal popup - the list is front and center; settings live in
+  their own screen so they never get in the way.
+- 100% local - everything is stored in the browser's local extension
+  storage. No accounts, no servers, no analytics, nothing ever leaves
+  your machine.
+
+Note: Google Docs, Sheets and Slides render their documents on canvas
+rather than as normal editable text, so Clipboarder automatically falls
+back to copying to your system clipboard there and shows a brief notice
+asking you to press Ctrl+V.
+
+
+CATEGORY
+-----------------------------------------------------------
+Productivity
+
+
+LANGUAGE
+-----------------------------------------------------------
+English
+
+
+SINGLE PURPOSE DESCRIPTION (required field in the dashboard)
+-----------------------------------------------------------
+Lets the user collect multiple text selections from web pages into a
+locally-stored list, and paste any of them back into a page, triggered by
+two keyboard shortcuts the user configures themselves.
+
+
+PERMISSION JUSTIFICATIONS (Privacy practices tab)
+-----------------------------------------------------------
+
+Host permission (<all_urls>) / content script on all pages:
+  Clipboarder needs to read the user's text selection and insert text at
+  the cursor on whichever page the user is currently using, since the
+  copy/paste shortcuts can be used on any website. It only reads a page's
+  selected text when the user has explicitly turned on copy mode via their
+  own keyboard shortcut, and only writes text back when the user triggers
+  a paste. It never reads page content otherwise, and never transmits any
+  page data anywhere.
+
+"storage" permission:
+  Used only to store the user's collected clipboard items and settings
+  locally in the browser (chrome.storage.local). No data is synced to any
+  external server or account.
+
+"scripting" permission (if used by current manifest):
+  Not currently used - omit if manifest does not declare it.
+
+
+DATA USAGE DISCLOSURE (for the "Data collected" declaration)
+-----------------------------------------------------------
+Clipboarder does NOT collect, transmit, sell, or share any user data. All
+list items and settings are stored locally in the browser via
+chrome.storage.local and never leave the user's device. There is no
+remote server, no analytics, and no network requests made by this
+extension.
+
+
+VISIBILITY
+-----------------------------------------------------------
+Recommended: "Unlisted" - installable only via the direct link Google
+generates after publishing; not shown in Chrome Web Store search/browse.
+Can be switched to "Public" later from the same Distribution tab if ever
+wanted.
+
+
+SCREENSHOT
+-----------------------------------------------------------
+store-listing/screenshot-1280x800.png (generated locally, 1280x800px)
