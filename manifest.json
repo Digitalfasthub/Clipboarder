@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Clipboarder",
-  "version": "1.2",
-  "description": "Toggle a copy-selection mode with a hotkey to collect multiple text selections into a list, then paste them back one by one with a second hotkey. Runs fully locally.",
+  "version": "1.2.2",
+  "description": "Collect multiple text selections into a list and paste them back one at a time, using two hotkeys you choose. Runs 100% locally.",
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
