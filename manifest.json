@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Clipboarder",
+  "version": "1.2",
+  "description": "Toggle a copy-selection mode with a hotkey to collect multiple text selections into a list, then paste them back one by one with a second hotkey. Runs fully locally.",
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Clipboarder",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-copy-mode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C"
+      },
+      "description": "Turn copy-selection mode on/off"
+    },
+    "paste-next-item": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V"
+      },
+      "description": "Paste the next item from the collected list"
+    }
+  }
+}

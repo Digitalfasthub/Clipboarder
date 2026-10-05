@@ -1,0 +1,13 @@
+# OS cruft
+Thumbs.db
+desktop.ini
+.DS_Store
+*:Zone.Identifier
+
+# Editor
+.vscode/
+
+# Packaged extension builds (if you ever zip it for the Web Store)
+*.crx
+*.pem
+*.zip
